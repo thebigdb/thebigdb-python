@@ -39,6 +39,10 @@ To upvote/downvote a node:
     db.upvote('NODE_ID') #Get the NodeID from db.search
     db.downvote('NODE_ID')
 
+Requirements
+===============
+- Python 3+
+
 TODO
 ===============
 
