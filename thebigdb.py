@@ -31,7 +31,7 @@ class TheBigDB:
             if (params[i] != ''):
                 requestString += 'nodes[%d]=%s&' % (i, quote(params[i]))
             else:
-                requestString += 'nodes[%d][search]=&' % (i)
+                requestString += 'nodes[%d][match]=&' % (i)
 
         if self.apiKey != '':
             requestString += 'api_key=' + self.apiKey + '&'
