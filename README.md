@@ -42,9 +42,9 @@ To upvote/downvote a node:
 TODO
 ===============
 
-- Implement the fulltext searching of nodes as specified in the API (with the keyword ``match`)
-- Write tests showing what goes in and out. The general idea can be taken from [request\_spec.rb](https://github.com/thebigdb/thebigdb-ruby/blob/master/spec/request_spec.rb) and [statement\_spec.rb](https://github.com/thebigdb/thebigdb-ruby/blob/master/spec/resources/statement_spec.rb)
-- [Later] Have the ``success_callback` only called on API success, and the ``failure_callback`` called on API errors. Raise an exception on other issues.
+- Implement the fulltext searching of nodes as specified in the API (with the keyword ``match``)
+- Write tests showing what goes in and out. The general idea can be taken from ruby version's [request\_spec.rb](https://github.com/thebigdb/thebigdb-ruby/blob/master/spec/request_spec.rb) and [statement\_spec.rb](https://github.com/thebigdb/thebigdb-ruby/blob/master/spec/resources/statement_spec.rb)
+- [Later] Have the ``success_callback`` only called on API success, and the ``failure_callback`` called on API errors. Raise an exception on other issues.
 
 
 Thanks
