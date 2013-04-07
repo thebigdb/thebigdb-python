@@ -1,7 +1,7 @@
 IMPORTANT NOTE
 ===============
 
-This is an experimental python wrapper for [TheBigDB.com API](http://thebigdb.com). It is currently under heavy development by the community and can change radically at any moment. As said in the [original README](https://github.com/thebigdb/thebigdb-python/blob/1d7b48b1e4d6e213167b26e1170c837e05553ba0/README.md), it is mainly inspired by the [Ruby](https://github.com/thebigdb/thebigdb-ruby) and the [Javascript](https://github.com/thebigdb/thebigdb-js) wrappers. You are more than welcome to improve it, by submitting a pull request.
+This is an experimental python wrapper for [TheBigDB.com API](http://thebigdb.com). It is currently under heavy development by the community and can change radically at any moment. As said in the [original README](https://github.com/thebigdb/thebigdb-python/blob/1d7b48b1e4d6e213167b26e1170c837e05553ba0/README.md), it is (and should be) mainly inspired by the [Ruby](https://github.com/thebigdb/thebigdb-ruby) and the [Javascript](https://github.com/thebigdb/thebigdb-js) wrappers. You are more than welcome to improve it, by submitting a pull request.
 
 Usage
 ===============
