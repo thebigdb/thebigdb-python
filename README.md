@@ -26,7 +26,13 @@ The empty string is treated as a wildcard.
 To insert data into TheBigDB:
     
     #inserts the atomic radius of iron into TheBigDB
-    db.add_nodes(['Iron', 'atomic radius', '140 ppm'])
+    db.add_nodes(['Iron', 'atomic radius', '140 ppm'], success_callback, failure_callback)
+
+To upvote/downvote a node:
+    
+    db.upvote('NODE_ID') #Get the NodeID from db.search
+    db.downvote('NODE_ID')
+
 
 
 Todo

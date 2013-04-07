@@ -16,9 +16,11 @@ class TheBigDB:
             verifySSLCertificates=False, #Not implemented.
             beforeRequestExecution=False,#Not implemented.
             afterRequestExecution=False, #Not implemented.
+            debug=False,
             ):
         self.apiKey=apiKey
         self.connection=HTTPConnection("api.thebigdb.com")
+        self.debug=debug
 
     def search(self, params, successCallback, errorCallback):
         """
@@ -34,7 +36,7 @@ class TheBigDB:
         if self.apiKey != '':
             requestString += 'api_key=' + self.apiKey + '&'
         #do the actual request
-        print(requestString)
+        if self.debug: print(requestString)
         self.connection.request('GET', requestString)
         response=self.connection.getresponse()
         if response.status != 200 : #Something went wrong!
@@ -42,16 +44,44 @@ class TheBigDB:
         else:
             successCallback(response.read().decode("UTF-8"))
 
-    def add_nodes(self, nodes):
+    def add_nodes(self, nodes, successCallback, errorCallback):
         """
         " Attempts to add a node to TheBigDB
         """
-        requestString='/v1/statements/create'
         requestData=''
         if self.apiKey != '':
             requestData += 'api_key=' + self.apiKey + '&'
         for i in range(len(nodes)):
             requestData += 'nodes[%d]=%s&' % (i, quote(nodes[i]))
-#        print(requestData)
-        self.connection.request('POST', requestString, requestData)
-        return self.connection.getresponse().read().decode('UTF-8')
+        if self.debug:print(requestData)
+        self.connection.request('POST','/v1/statements/create',requestData)
+        response=self.connection.getresponse()
+        if response.status != 200 : #Something went wrong!
+            errorCallback(response)
+        else:
+            successCallback(response.read().decode("UTF-8"))
+
+    def _vote(self, nodeid, successCallback, errorCallback, url):
+        requestData=''
+        if self.apiKey != '':
+            requestData += 'api_key=' + self.apiKey + '&'
+        requestData += 'id=%s&' % (nodeid)
+        self.connection.request('POST',url,requestData)
+        response=self.connection.getresponse()
+        if response.status != 200 : #Something went wrong!
+            errorCallback(response)
+        else:
+            successCallback(response.read().decode("UTF-8"))
+
+
+    def upvote(self, nodeid, successCallback, errorCallback):
+        """
+        " Upvotes a node.
+        """
+        self._vote(nodeid, successCallback, errorCallback, '/v1/statements/upvote')
+    
+    def downvote(self, nodeid, successCallback, errorCallback):
+        """
+        " Downvotes a node.
+        """
+        self._vote(nodeid, successCallback, errorCallback, '/v1/statements/downvote')
