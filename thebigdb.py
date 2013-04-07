@@ -44,7 +44,7 @@ class TheBigDB:
         else:
             successCallback(response.read().decode("UTF-8"))
 
-    def add_nodes(self, nodes, successCallback, errorCallback):
+    def create(self, nodes, successCallback, errorCallback):
         """
         " Attempts to add a node to TheBigDB
         """
