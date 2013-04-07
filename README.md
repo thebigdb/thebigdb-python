@@ -13,6 +13,7 @@ First, create an instance of TheBigDB:
     db=TheBigDB('YOUR_API_KEY_GOES_HERE')
 
 To search TheBigDB:
+
 The empty string is treated as a wildcard.
 
     def success_callback(response):
@@ -37,10 +38,3 @@ To upvote/downvote a node:
     
     db.upvote('NODE_ID') #Get the NodeID from db.search
     db.downvote('NODE_ID')
-
-
-
-Todo
-==============
-
- - Implement up/down voting
