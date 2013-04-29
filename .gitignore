@@ -1,4 +1,6 @@
 *.py[cod]
+.env
+.autonose-depends.pickle
 
 # C extensions
 *.so

@@ -1,56 +1,84 @@
-IMPORTANT NOTE
-===============
+# TheBigDB Python Wrapper
 
-This is an experimental python wrapper for [TheBigDB.com API](http://thebigdb.com). It is currently under heavy development by the community and can change radically at any moment. As said in the [original README](https://github.com/thebigdb/thebigdb-python/blob/1d7b48b1e4d6e213167b26e1170c837e05553ba0/README.md), it is (and should be) mainly inspired by the [Ruby](https://github.com/thebigdb/thebigdb-ruby) and the [Javascript](https://github.com/thebigdb/thebigdb-js) wrappers. You are more than welcome to improve it, by submitting a pull request.
+A simple python wrapper for making requests to the API of [TheBigDB.com](http://thebigdb.com). [Full API documentation](http://developers.thebigdb.com/api).
 
-Usage
-===============
+## Install
 
-Using TheBigDB's python client is very simple.
+Just grab the file ``thebigdb.py``. You'll only need to have the package [requests](http://docs.python-requests.org/en/latest/user/install/) intalled.
 
-First, create an instance of TheBigDB:
+## Simple usage
 
-    db=TheBigDB('YOUR_API_KEY_GOES_HERE')
-
-To search TheBigDB:
-
-The empty string is treated as a wildcard.
-
-    def success_callback(response):
-        #Here you can proccess the response to your query.
-        #response is the JSON string that TheBigDB returned
-        #success in this case only means that the HTTP request did not error out
-        #it does not mean that TheBigDB has not returned an error code.
-
-    def failure_callback(response):
-        #Called on HTTP request failure.
-        #response is an object of type http.client.HTTPResponse
-
-    db.search(['', 'atomic radius'], success_callback, failure_callback)
-    # Returns all facts with 'atomic radius' as the second node.
-
-To insert data into TheBigDB:
+First, you need to initialize the class with:
     
-    #inserts the atomic radius of iron into TheBigDB
-    db.create(['Iron', 'atomic radius', '140 pm'], success_callback, failure_callback)
+    from thebigdb import TheBigDB
+    thebigdb = TheBigDB()
 
-To upvote/downvote a node:
+The following actions return a dict object from the parsed JSON the server answered.
+
+### Search \([api doc](http://developers.thebigdb.com/api#statements-search)\)
+
+    thebigdb.search([{"match": "James"}, "job", "President of the United States"])
+    thebigdb.search([{"match": "Facebook"}, "job", {"match": "Executive"}])
+
+### Create \([api doc](http://developers.thebigdb.com/api#statements-create)\)
     
-    db.upvote('NODE_ID') #Get the NodeID from db.search
-    db.downvote('NODE_ID')
+    thebigdb.api_key = "your-private-api-key"
 
-Requirements
-===============
-- Python 3+
+    thebigdb.create(["iPhone 5", "weight", "112 grams"])
+    thebigdb.create(["Bill Clinton", "job", "President of the United States"], {"period": {"from": "1993-01-20 12:00:00", "to": "2001-01-20 12:00:00"}})
 
-TODO
-===============
+### Show \([api doc](http://developers.thebigdb.com/api#statements-show)\), Upvote \([api doc](http://developers.thebigdb.com/api#statements-upvote)\) and Downvote \([api doc](http://developers.thebigdb.com/api#statements-downvote)\)
 
-- Implement the fulltext searching of nodes as specified in the API (with the keyword ``match``)
-- Write tests showing what goes in and out. The general idea can be taken from ruby version's [request\_spec.rb](https://github.com/thebigdb/thebigdb-ruby/blob/master/spec/request_spec.rb) and [statement\_spec.rb](https://github.com/thebigdb/thebigdb-ruby/blob/master/spec/resources/statement_spec.rb)
-- [Later] Have the ``success_callback`` only called on API success, and the ``failure_callback`` called on API errors. Raise an exception on other issues.
+    thebigdb.show("id-of-the-sentence")
+
+    thebigdb.upvote("id-of-the-sentence") # don't forget to set your API key
+    thebigdb.downvote("id-of-the-sentence") # don't forget to set your API key
+
+That's it!
 
 
-Thanks
-===============
+## Response object
+
+If you want more details on what has been received, you can check ``thebigdb.response`` after each request.
+It is the object returned by the ``requests`` package after each request.
+
+It has several readable attributes:
+    
+    thebigdb.show("id-of-the-sentence")
+    thebigdb.response.content       # String of the actual content received from the server
+    thebigdb.response.headers       # Dict of the headers received from the server
+
+[More details](http://docs.python-requests.org/en/latest/user/quickstart/#response-content)
+
+## Other Features
+
+You can access other parts of the API in the same way as statements:
+    
+    thebigdb.user(action, parameters)
+
+    # Examples
+    thebigdb.user("show", {"login": "christophe"})["user"]["karma"]
+
+
+## Requirements
+
+- Python 2.7+
+
+## Contributing
+
+Don't hesitate to send a pull request !
+
+## Testing
+
+First, install the required packages:
+
+    pip install -r requirements.pip
+
+Then, run the tests in the ``tests.py`` file with:
+
+    nosetests
+
+
+# Thanks
 - [bobtwinkles](https://github.com/bobtwinkles) for creating the first version of this wrapper
+- The community for their invaluable feedback!
