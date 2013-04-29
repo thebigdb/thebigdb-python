@@ -38,33 +38,28 @@ class TheBigDB:
     def search(self, nodes, other_params = {}):
         params = {"nodes": nodes}
         params.update(other_params)
-        if self.api_key: params.update({"api_key": self.api_key})
-        return self.request("get", "/statements/search", self.serialize_query_params(params))
+        return self.request("get", "/statements/search", params)
 
     def show(self, id, other_params = {}):
         params = {"id": id}
         params.update(other_params)
-        if self.api_key: params.update({"api_key": self.api_key})
-        return self.request("get", "/statements/show", self.serialize_query_params(params))
+        return self.request("get", "/statements/show", params)
 
     # POST
     def create(self, nodes, other_params = {}):
         params = {"nodes": nodes}
         params.update(other_params)
-        if self.api_key: params.update({"api_key": self.api_key})
-        return self.request("post", "/statements/create", self.serialize_query_params(params))
+        return self.request("post", "/statements/create", params)
 
     def upvote(self, id, other_params = {}):
         params = {"id": id}
         params.update(other_params)
-        if self.api_key: params.update({"api_key": self.api_key})
-        return self.request("post", "/statements/upvote", self.serialize_query_params(params))
+        return self.request("post", "/statements/upvote", params)
 
     def downvote(self, id, other_params = {}):
         params = {"id": id}
         params.update(other_params)
-        if self.api_key: params.update({"api_key": self.api_key})
-        return self.request("post", "/statements/downvote", self.serialize_query_params(params))
+        return self.request("post", "/statements/downvote", params)
 
 
     ##############################
@@ -72,8 +67,7 @@ class TheBigDB:
     ##############################
 
     def user(self, action, params):
-        if self.api_key: params.update({"api_key": self.api_key})
-        return self.request("get", "/users/"+action, self.serialize_query_params(params))
+        return self.request("get", "/users/"+action, params)
 
 
     ##############################
@@ -95,6 +89,11 @@ class TheBigDB:
                 "language_version": sys.version,
             })
         }
+
+        if self.api_key:
+            params.update({"api_key": self.api_key})
+
+        params = self.serialize_query_params(params)
 
         if method == "get":
             self.response = requests.get(url, headers = headers, params = params)
