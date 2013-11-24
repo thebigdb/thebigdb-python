@@ -121,14 +121,14 @@ def test_searching_sends_the_correct_http_request():
                            body = '{"server_says": "hello world"}')
 
     thebigdb = TheBigDB()
-    thebigdb.search([{"match": "X"}, "Y", {"match": "Z"}], {"page": 2})
+    thebigdb.search({"subject": {"match": "X"}, "property": "Y", "answer": {"match": "Z"}}, {"page": 2})
 
     expect(httpretty.httpretty.last_request.method).to.equal("GET")
-    expect(httpretty.httpretty.last_request.path).to.equal("/v1/statements/search?nodes%5B0%5D%5Bmatch%5D=X&nodes%5B1%5D=Y&nodes%5B2%5D%5Bmatch%5D=Z&page=2")
+    expect(httpretty.httpretty.last_request.path).to.equal("/v1/statements/search?nodes%5Banswer%5D%5Bmatch%5D=Z&nodes%5Bproperty%5D=Y&nodes%5Bsubject%5D%5Bmatch%5D=X&page=2")
     expect(httpretty.httpretty.last_request).to.have.property("querystring").being.equal({
-        "nodes[0][match]": ["X"],
-        "nodes[1]": ["Y"],
-        "nodes[2][match]": ["Z"],
+        "nodes[subject][match]": ["X"],
+        "nodes[property]": ["Y"],
+        "nodes[answer][match]": ["Z"],
         "page": ["2"],
     })
 
@@ -138,11 +138,11 @@ def test_creating_sends_the_correct_http_request():
                            body = '{"server_says": "hello world"}')
 
     thebigdb = TheBigDB(api_key = "foobarkey")
-    thebigdb.create(["A", "B", "C"], {"period": {"from": "2013-01-01", "to": "2014-01-01"}})
+    thebigdb.create({"subject": "A", "property": "B", "answer": "C"}, {"period": {"from": "2013-01-01", "to": "2014-01-01"}})
 
     expect(httpretty.httpretty.last_request.method).to.equal("POST")
     expect(httpretty.httpretty.last_request.path).to.equal("/v1/statements/create")
-    expect(httpretty.httpretty.last_request).to.have.property("body").being.equal("nodes%5B0%5D=A&nodes%5B1%5D=B&nodes%5B2%5D=C&api_key=foobarkey&period%5Bto%5D=2014-01-01&period%5Bfrom%5D=2013-01-01")
+    expect(httpretty.httpretty.last_request).to.have.property("body").being.equal("nodes%5Banswer%5D=C&nodes%5Bproperty%5D=B&nodes%5Bsubject%5D=A&api_key=foobarkey&period%5Bto%5D=2014-01-01&period%5Bfrom%5D=2013-01-01")
 
 
 @httpretty.activate

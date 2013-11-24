@@ -18,7 +18,7 @@ class TheBigDB:
         "debug": False # Not implemented yet
     }
 
-    wrapper_version = "0.0.2"
+    wrapper_version = "0.0.3"
 
     def __init__(self, **kwargs):
         for key, value in self.default_configuration.items():
@@ -35,7 +35,7 @@ class TheBigDB:
     ##############################
 
     # GET
-    def search(self, nodes, other_params = {}):
+    def search(self, nodes = {}, other_params = {}):
         params = {"nodes": nodes}
         params.update(other_params)
         return self.request("get", "/statements/search", params)
@@ -46,7 +46,7 @@ class TheBigDB:
         return self.request("get", "/statements/show", params)
 
     # POST
-    def create(self, nodes, other_params = {}):
+    def create(self, nodes = {}, other_params = {}):
         params = {"nodes": nodes}
         params.update(other_params)
         return self.request("post", "/statements/create", params)

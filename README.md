@@ -1,6 +1,6 @@
 # TheBigDB Python Wrapper
 
-A simple python wrapper for making requests to the API of [TheBigDB.com](http://thebigdb.com). [Full API documentation](http://developers.thebigdb.com/api).
+A simple python wrapper for making requests to the API of [TheBigDB.com](http://thebigdb.com). [Full API documentation](http://thebigdb.com/api).
 
 ## Install
 
@@ -15,19 +15,19 @@ First, you need to initialize the class with:
 
 The following actions return a dict object from the parsed JSON the server answered.
 
-### Search \([api doc](http://developers.thebigdb.com/api#statements-search)\)
+### Search \([api doc](http://thebigdb.com/api#statements-search)\)
 
-    thebigdb.search([{"match": "James"}, "job", "President of the United States"])
-    thebigdb.search([{"match": "Facebook"}, "job", {"match": "Executive"}])
+    thebigdb.search({"subject": {match: "James"}, "property": "job", "answer": "President of the United States"})
+    thebigdb.search({"subject": "London", "property": "population"}, {"period": {"on": "2007-06-05"}})
 
-### Create \([api doc](http://developers.thebigdb.com/api#statements-create)\)
+### Create \([api doc](http://thebigdb.com/api#statements-create)\)
     
     thebigdb.api_key = "your-private-api-key"
 
-    thebigdb.create(["iPhone 5", "weight", "112 grams"])
-    thebigdb.create(["Bill Clinton", "job", "President of the United States"], {"period": {"from": "1993-01-20 12:00:00", "to": "2001-01-20 12:00:00"}})
+    thebigdb.create({"subject": "iPhone 5", "property": "weight", "answer": "112 grams"})
+    thebigdb.create({"subject": "Bill Clinton", "property": "job", "answer": "President of the United States"}, {"period": {"from": "1993-01-20 12:00:00", "to": "2001-01-20 12:00:00"}})
 
-### Show \([api doc](http://developers.thebigdb.com/api#statements-show)\), Upvote \([api doc](http://developers.thebigdb.com/api#statements-upvote)\) and Downvote \([api doc](http://developers.thebigdb.com/api#statements-downvote)\)
+### Show \([api doc](http://thebigdb.com/api#statements-show)\), Upvote \([api doc](http://thebigdb.com/api#statements-upvote)\) and Downvote \([api doc](http://thebigdb.com/api#statements-downvote)\)
 
     thebigdb.show("id-of-the-sentence")
 
